@@ -11,3 +11,23 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+table {
+  margin: 1rem;
+  width: calc(100% - 50px)
+}
+
+.App {
+  text-align: center;
+}
+
+.Menu {
+  background-color: #253a46;
+  font-size: 1rem;
+  padding: 0.8rem;
+
+}
+.Menu a {
+  color: #e2e2e2;
+  padding: 0.8rem;
+}

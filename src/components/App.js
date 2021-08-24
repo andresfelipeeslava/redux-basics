@@ -1,9 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Menu from './Menu';
-import Todos from './todos';
-import Users from './users';
-
+import Todos from './Todos';
+import Users from './Users';
 
 class App extends React.Component {
   constructor() {

@@ -1,14 +1,15 @@
 import React from 'react';
 import { connect } from 'react-redux'
 import * as usersActions from '../../actions/usersActions'
+import { Spinner } from '../Spinner';
 
-class Users extends React.Component {  
+class Users extends React.Component {
   componentDidMount() {
     this.props.getUsers();
   }
 
   drawUserRows() {
-    return this.props.users.map( user => (
+    return this.props.users.map(user => (
       <tr key={user.id}>
         <td>{user.name}</td>
         <td>{user.email}</td>
@@ -17,28 +18,38 @@ class Users extends React.Component {
     ))
   }
 
+  showContent() {
+    return (
+      this.props.loading
+        ? <Spinner />
+        : (
+          <table className="App">
+            <thead>
+              <tr>
+                <th>
+                  Nombre
+                </th>
+                <th>
+                  Correo
+                </th>
+                <th>
+                  Enlace
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {this.drawUserRows()}
+            </tbody>
+          </table>
+        )
+    )
+  }
+
   render() {
     console.log(`this.props`, this.props)
-    return (
-    <table className="App">
-      <thead>
-        <tr>
-          <th>
-            Nombre
-          </th>
-          <th>
-            Correo
-          </th>
-          <th>
-            Enlace
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        {this.drawUserRows()}
-      </tbody>
-    </table>
-    );
+    return <>
+      {this.showContent()}
+    </>
   }
 }
 

@@ -1,55 +1,36 @@
 import React from 'react';
-import { connect } from 'react-redux'
-import * as usersActions from '../../actions/usersActions'
+import { connect } from 'react-redux';
+import * as usersActions from '../../actions/components/usersActions';
 import { Spinner } from '../Spinner';
+import { Fatal } from '../Fatal';
+import Table from './Table';
+import '../../styles/components/Users.css';
 
 class Users extends React.Component {
   componentDidMount() {
     this.props.getUsers();
   }
 
-  drawUserRows() {
-    return this.props.users.map(user => (
-      <tr key={user.id}>
-        <td>{user.name}</td>
-        <td>{user.email}</td>
-        <td>{user.website}</td>
-      </tr>
-    ))
-  }
+  showContent = () => {
+    // Loading state
+    if (this.props.loading) 
+      <Spinner />
 
-  showContent() {
-    return (
-      this.props.loading
-        ? <Spinner />
-        : (
-          <table className="App">
-            <thead>
-              <tr>
-                <th>
-                  Nombre
-                </th>
-                <th>
-                  Correo
-                </th>
-                <th>
-                  Enlace
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {this.drawUserRows()}
-            </tbody>
-          </table>
-        )
-    )
+    // Error state
+    if (this.props.error)
+      <Fatal message={this.props.error}/>
+
+    // Success state
+    return <Table users={this.props.users}/>
   }
 
   render() {
-    console.log(`this.props`, this.props)
-    return <>
-      {this.showContent()}
-    </>
+    return (
+      <div className="Users">
+        <h1>Users</h1>
+        {this.showContent()}
+      </div>
+    )
   }
 }
 

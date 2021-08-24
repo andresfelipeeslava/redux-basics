@@ -1,5 +1,5 @@
 /* eslint-disable import/no-anonymous-default-export */
-import { GET_USERS, LOADING, ERROR } from '../types/usersTypes';
+import { GET_USERS, LOADING, ERROR } from '../../types/usersTypes';
 
 const INITIAL_STATE = {
   users: [],

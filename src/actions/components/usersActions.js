@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { GET_USERS, LOADING, ERROR } from '../types/usersTypes';
+import { GET_USERS, LOADING, ERROR } from '../../types/usersTypes';
 
 const API_URL = 'https://jsonplaceholder.typicode.com/users';
 
@@ -20,7 +20,7 @@ export const getUsers = () => {
       dispatch({
         type: ERROR,
         loading: false,
-        payload: err.message,
+        payload: `There's something went wrong: ${err.message}`,
       });
     }
   }

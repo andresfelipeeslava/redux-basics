@@ -13,7 +13,6 @@ class App extends React.Component {
   render() {
     return (
       <Router>
-        {/* <Switch> */}
           <Menu />
           <Route exact path="/users">
             <Users />
@@ -21,7 +20,6 @@ class App extends React.Component {
           <Route exact path="/todos">
             <Todos />
           </Route>
-        {/* </Switch> */}
       </Router>
     );
   }

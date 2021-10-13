@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Menu from './Menu';
+import Publications from './Publications';
 import Todos from './Todos';
 import Users from './Users';
 
@@ -19,6 +20,9 @@ class App extends React.Component {
           </Route>
           <Route exact path="/todos">
             <Todos />
+          </Route>
+          <Route exact path="/publications/:key">
+            <Publications />
           </Route>
       </Router>
     );

@@ -1,13 +1,21 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+
+import '../../styles/components/Table.css';
 
 const Table = (props) => {
   const drawUserRows = () => props.users.map(
-    (user) => (
+    (user, key) => (
       <tr key={user.id}>
         <td>{user.name}</td>
         <td>{user.email}</td>
         <td>{user.website}</td>
+        <td>
+          <Link to={`/publications/${key}`}>
+            <div className="sun-horizon-solid icon"></div>
+          </Link>
+        </td>
       </tr>
     )
   )
@@ -20,7 +28,7 @@ const Table = (props) => {
             Nombre
           </th>
           <th>
-            Correo
+            Email
           </th>
           <th>
             Enlace

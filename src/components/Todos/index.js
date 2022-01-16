@@ -2,7 +2,7 @@ import React from 'react'
 
 const Todos = () => {
   return (
-    <div>
+    <div className="todos margin-2rem">
       Todos
     </div>
   )

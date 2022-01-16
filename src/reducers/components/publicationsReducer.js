@@ -1,34 +1,38 @@
-import { GET_USERS, LOADING_USERS, ERROR_USERS } from '../../types/usersTypes';
+/* eslint-disable import/no-anonymous-default-export */
+import {
+  GET_PUBLICATIONS_BY_USER,
+  LOADING_PUBLICATIONS,
+  ERROR_PUBLICATIONS
+} from '../../types/publicationsTypes';
 
 const INITIAL_STATE = {
-  users: [],
+  publications: [],
   loading: false,
   error: ''
 };
 
-// eslint-disable-next-line import/no-anonymous-default-export
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case GET_USERS:
+    case GET_PUBLICATIONS_BY_USER:
       return {
         ...state,
-        users: action.payload,
+        publications: action.payload,
         loading: false,
         error: ''
       }
-
-    case LOADING_USERS:
+    
+    case LOADING_PUBLICATIONS:
       return {
         ...state,
         loading: true
       }
 
-    case ERROR_USERS:
+    case ERROR_PUBLICATIONS:
       return {
         ...state,
         loading: false,
         error: action.payload
-      }
+      }  
 
     default: return state;
   };

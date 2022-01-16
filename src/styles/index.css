@@ -30,3 +30,7 @@ table {
   color: #e2e2e2;
   padding: 0.8rem;
 }
+
+.margin-2rem {
+  margin: 2rem;
+}

@@ -14,16 +14,16 @@ class App extends React.Component {
   render() {
     return (
       <Router>
-          <Menu />
-          <Route exact path="/users">
-            <Users />
-          </Route>
-          <Route exact path="/todos">
-            <Todos />
-          </Route>
-          <Route exact path="/publications/:key">
-            <Publications />
-          </Route>
+        <Menu />
+        <Route exact path="/users">
+          <Users />
+        </Route>
+        <Route exact path="/todos">
+          <Todos />
+        </Route>
+        <Route exact path="/publications/:key">
+          <Publications />
+        </Route>
       </Router>
     );
   }

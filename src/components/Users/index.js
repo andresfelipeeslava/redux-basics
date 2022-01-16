@@ -8,25 +8,28 @@ import '../../styles/components/Users.css';
 
 class Users extends React.Component {
   componentDidMount() {
-    this.props.getUsers();
+    if(!this.props.users.length) {
+      this.props.getUsers();
+    }
   }
 
   showContent = () => {
     // Loading state
-    if (this.props.loading) 
-      <Spinner />
+    if (this.props.loading)
+      return <Spinner />
 
     // Error state
-    if (this.props.error)
-      <Fatal message={this.props.error}/>
+    if (this.props.error) 
+      return <Fatal message={this.props.error}/>
 
     // Success state
     return <Table users={this.props.users}/>
   }
 
   render() {
+    console.log(`this.props ─>`, this.props)
     return (
-      <div className="Users">
+      <div className="margin-2rem">
         <h1>Users</h1>
         {this.showContent()}
       </div>
@@ -34,7 +37,7 @@ class Users extends React.Component {
   }
 }
 
-const mapStateToProps = (reducers) => {
+const mapStateToProps = ( reducers ) => {
   return reducers.usersReducer;
 }
 

@@ -59,8 +59,25 @@ export const getUniqueUser = (key) => {
   }
 }
 
-export const openAndClosePublications = (publicationsKey, commentKey) => {
-  return async (dispatch) => {
-    console.log(publicationsKey, commentKey);
+export const openAndClosePublications = (publicationsKey, commentsKey) => {
+  return async (dispatch, getState) => {
+    const { publications } = getState().publicationsReducer;
+    const publicationSelected = publications[publicationsKey][commentsKey];
+    
+    const updatePublication = {
+      ...publicationSelected,
+      isOpen: !publicationSelected.isOpen
+    };
+
+    const publicationsUpdated = [...publications];
+    publicationsUpdated[publicationsKey] = [
+      ...publications[publicationsKey],
+    ]
+    publicationsUpdated[publicationsKey][commentsKey] = updatePublication;
+
+    dispatch({
+      type: GET_PUBLICATIONS_BY_USER,
+      payload: publicationsUpdated
+    });
   };
 };

@@ -52,7 +52,8 @@ class Publications extends Component {
       publicationsReducer: { publications },
       match: { params: { key } }
     } = this.props;
-    // Se revisa info del usuario
+
+    // Se valida info del usuario
     if (!users.length) return; // la información del usuario no existe
     if (usersReducer.error) return; // la información del usuario tiene error
     // Se revisa info de las publicaciones
@@ -74,21 +75,25 @@ class Publications extends Component {
 
   showInformation = (publications, publicationsKey) => {
 
-    return publications.map((publication, commentKey) => (
+    return publications.map((publication, commentsKey) => (
       <div
         key={`${publication.userId}_${publication.id}`}
         className="publications_body"
-        onClick={() => this.props.openAndClosePublications(publicationsKey, commentKey)}
+        onClick={() => this.props.openAndClosePublications(publicationsKey, commentsKey)}
       >
         <h4> {publication.title}
         </h4>
-        <span>{publication.body}</span>
+        <p>{publication.body}</p>
+
+        {
+          (publication.isOpen) ? 'abierto' : 'cerrado'
+        }
       </div>
     ));
   };
 
   render() {
-    // console.log(`this.props <──`, this.props)
+    console.log(`this.props <──`, this.props)
     return (
       <div className="margin-2rem">
         {this.setUser()}

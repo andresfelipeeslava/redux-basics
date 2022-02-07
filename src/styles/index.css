@@ -34,3 +34,8 @@ table {
 .margin-2rem {
   margin: 2rem;
 }
+
+.publications_body {
+  padding: 0.8rem;
+  border-bottom: 1px dashed #340;
+}

@@ -23,7 +23,6 @@ export const getUsers = () => {
       dispatch({
         type: ERROR_USERS,
         payload: `There's something went wrong: ${err.message}`,
-        loading: false,
       });
     }
   }

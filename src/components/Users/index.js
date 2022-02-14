@@ -27,7 +27,7 @@ class Users extends React.Component {
   }
 
   render() {
-    console.log(`this.props ─>`, this.props)
+    // console.log(`this.props ─>`, this.props)
     return (
       <div className="margin-2rem">
         <h1>Users</h1>

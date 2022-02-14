@@ -6,7 +6,7 @@ import {
 } from '../../types/publicationsTypes';
 import * as usersTypes from '../../types/usersTypes';
 
-const API_URL = 'https://jsonplaceholder.typicode.com/posts';
+const API_URL = 'https://jsonplaceholder.typicode.com';
 const { GET_USERS: GET_ALL_USERS } = usersTypes;
 
 export const getUniqueUser = (key) => {
@@ -18,36 +18,37 @@ export const getUniqueUser = (key) => {
     const { users } = getState().usersReducer;
     const { publications } = getState().publicationsReducer;
     const userId = users[key].id;
-    
-    try {
-      const response = await axios.get(`${API_URL}?userId=${userId}`);
 
+    try {
+      const response = await axios.get(`${API_URL}/posts?userId=${userId}`);
+      // agrego el arreglo de comentarios y variable open/close a cada publicación
       const newPublications = response.data.map((publication) => ({
         ...publication,
         comments: [],
         isOpen: false
       }));
-
       const publicationsUpdated = [
         ...publications,
         newPublications,
       ];
+
       dispatch({
         type: GET_PUBLICATIONS_BY_USER,
         payload: publicationsUpdated
       });
-  
-      const publicationsKey = publicationsUpdated.length - 1;
+
+      // Agregamos la key de la posición de la publicación del usuario
+      const userPublicationsKey = publicationsUpdated.length - 1;
       const usersUpdated = [ ...users];
       usersUpdated[key] = {
         ...users[key],
-        publicationsKey,
+        userPublicationsKey,
       }
+
       dispatch({
         type: GET_ALL_USERS,
         payload: usersUpdated
-      });
-
+      });      
     }
     catch (error) {
       new Error(console.error('Error occured: ',error.message));
@@ -59,21 +60,20 @@ export const getUniqueUser = (key) => {
   }
 }
 
-export const openAndClosePublications = (publicationsKey, commentsKey) => {
+export const openAndClosePublications = (userPublicationsKey, publicationCommentsKey) => {
   return async (dispatch, getState) => {
     const { publications } = getState().publicationsReducer;
-    const publicationSelected = publications[publicationsKey][commentsKey];
-    
-    const updatePublication = {
+    const publicationSelected = publications[userPublicationsKey][publicationCommentsKey];
+    const publicationSelectedUpdated = {
       ...publicationSelected,
       isOpen: !publicationSelected.isOpen
     };
 
     const publicationsUpdated = [...publications];
-    publicationsUpdated[publicationsKey] = [
-      ...publications[publicationsKey],
-    ]
-    publicationsUpdated[publicationsKey][commentsKey] = updatePublication;
+    publicationsUpdated[userPublicationsKey] = [
+      ...publications[userPublicationsKey],
+    ];
+    publicationsUpdated[userPublicationsKey][publicationCommentsKey] = publicationSelectedUpdated;
 
     dispatch({
       type: GET_PUBLICATIONS_BY_USER,
@@ -81,3 +81,30 @@ export const openAndClosePublications = (publicationsKey, commentsKey) => {
     });
   };
 };
+
+export const getComments = (userPublicationsKey, publicationCommentsKey) => {
+  return async (dispatch, getState) => {
+    const { publications } = getState().publicationsReducer;
+    const publicationSelected = publications[userPublicationsKey][publicationCommentsKey];
+
+    const response = await axios.get(`${API_URL}/comments?postId=${publicationSelected.id}`);
+
+    const publicationSelectedUpdated = {
+      ...publicationSelected,
+      comments: response.data
+    };
+
+    const publicationsUpdated = [...publications];
+    publicationsUpdated[userPublicationsKey] = [
+      ...publications[userPublicationsKey],
+    ];
+    publicationsUpdated[userPublicationsKey][publicationCommentsKey] = publicationSelectedUpdated;
+
+    dispatch({
+      type: GET_PUBLICATIONS_BY_USER,
+      payload: publicationsUpdated
+    });
+
+    return ({});
+  }
+}

@@ -2,13 +2,18 @@
 import {
   GET_PUBLICATIONS_BY_USER,
   LOADING_PUBLICATIONS,
-  ERROR_PUBLICATIONS
+  ERROR_PUBLICATIONS,
+  GET_COMMENTS,
+  COMMENTS_LOADING,
+  COMMENTS_ERROR
 } from '../../types/publicationsTypes';
 
 const INITIAL_STATE = {
   publications: [],
   loading: false,
-  error: ''
+  error: '',
+  commentsLoading: false,
+  commentsError: ''
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -18,14 +23,15 @@ export default (state = INITIAL_STATE, action) => {
         ...state,
         publications: action.payload,
         loading: false,
-        error: ''
+        error: '',
+        commentsLoading: false,
+        commentsError: ''
       }
-    
+
     case LOADING_PUBLICATIONS:
       return {
         ...state,
         loading: true,
-        error: ''
       }
 
     case ERROR_PUBLICATIONS:
@@ -33,7 +39,27 @@ export default (state = INITIAL_STATE, action) => {
         ...state,
         loading: false,
         error: action.payload
-      }  
+      }
+
+    case GET_COMMENTS:
+      return {
+        ...state,
+        publications: action.payload,
+        commentsLoading: false,
+        commentsError: ''
+      }
+
+    case COMMENTS_LOADING:
+      return {
+        ...state,
+        commentsLoading: true,
+      }
+
+    case COMMENTS_ERROR:
+      return {
+        ...state,
+        commentsError: action.payload
+      }
 
     default: return state;
   };

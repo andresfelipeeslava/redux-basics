@@ -108,7 +108,7 @@ class Publications extends Component {
           (publication.isOpen)
             ? <div>
               <p>{publication.body}</p>
-              <Comments />
+              <Comments comments={publication.comments} />
             </div>
             : <span>Abrir</span>
         }

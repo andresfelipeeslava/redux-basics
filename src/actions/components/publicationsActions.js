@@ -2,7 +2,10 @@ import axios from "axios";
 import {
   GET_PUBLICATIONS_BY_USER,
   LOADING_PUBLICATIONS,
-  ERROR_PUBLICATIONS
+  ERROR_PUBLICATIONS,
+  GET_COMMENTS,
+  COMMENTS_LOADING,
+  COMMENTS_ERROR
 } from '../../types/publicationsTypes';
 import * as usersTypes from '../../types/usersTypes';
 
@@ -84,26 +87,39 @@ export const openAndClosePublications = (userPublicationsKey, publicationComment
 
 export const getComments = (userPublicationsKey, publicationCommentsKey) => {
   return async (dispatch, getState) => {
+    dispatch({
+      type: COMMENTS_LOADING
+    });
+
     const { publications } = getState().publicationsReducer;
     const publicationSelected = publications[userPublicationsKey][publicationCommentsKey];
 
-    const response = await axios.get(`${API_URL}/comments?postId=${publicationSelected.id}`);
-
-    const publicationSelectedUpdated = {
-      ...publicationSelected,
-      comments: response.data
-    };
-
-    const publicationsUpdated = [...publications];
-    publicationsUpdated[userPublicationsKey] = [
-      ...publications[userPublicationsKey],
-    ];
-    publicationsUpdated[userPublicationsKey][publicationCommentsKey] = publicationSelectedUpdated;
-
-    dispatch({
-      type: GET_PUBLICATIONS_BY_USER,
-      payload: publicationsUpdated
-    });
+    try {
+      const response = await axios.get(`${API_URL}/comments?postId=${publicationSelected.id}`);
+  
+      const publicationSelectedUpdated = {
+        ...publicationSelected,
+        comments: response.data
+      };
+  
+      const publicationsUpdated = [...publications];
+      publicationsUpdated[userPublicationsKey] = [
+        ...publications[userPublicationsKey],
+      ];
+      publicationsUpdated[userPublicationsKey][publicationCommentsKey] = publicationSelectedUpdated;
+  
+      dispatch({
+        type: GET_COMMENTS,
+        payload: publicationsUpdated
+      });
+    }
+    catch (error) {
+      new Error(console.error('Error occured: ',error.message));
+      dispatch({
+        type: COMMENTS_ERROR,
+        payload: `Comments not found: ${error.message}`,
+      })
+    }
 
     return ({});
   }

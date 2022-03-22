@@ -109,8 +109,9 @@ class Publications extends Component {
             ? <div>
               <p>{publication.body}</p>
               <Comments comments={publication.comments} />
+              <span>Close</span>
             </div>
-            : <span>Abrir</span>
+            : <span>Open</span>
         }
       </div>
     ));

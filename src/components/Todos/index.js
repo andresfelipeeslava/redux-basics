@@ -1,11 +1,20 @@
-import React from 'react'
+import React from "react";
+import { connect } from "react-redux";
+import * as todosActions from "../../actions/components/todosActions";
 
-const Todos = () => {
-  return (
-    <div className="todos margin-2rem">
-      Todos
-    </div>
-  )
+class Todos extends React.Component {
+  componentDidMount() {
+    if (!this.props.todos.lenght) {
+      this.props.getTodos();
+    }
+  }
+
+  render() {
+    console.log("this.props>>>>>>>>>>>><", this.props);
+    return <div className="todos margin-2rem">Todos here!</div>;
+  }
 }
 
-export default Todos
+const mapStateTopProps = ({ todosReducer }) => todosReducer;
+
+export default connect(mapStateTopProps, todosActions)(Todos);

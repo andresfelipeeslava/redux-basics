@@ -11,6 +11,8 @@ export const getTodos = () => {
 
     try {
       const response = await axios.get(API_URL);
+      // `response` is an array, but the project needs
+      // todos to be an object. I
       const todos = {};
       response.data.map(
         (todo) =>

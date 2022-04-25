@@ -33,7 +33,10 @@ table {
   padding: 0.8rem;
 }
 
-.margin-2rem {
+.m-xs {
+  margin: .5rem;
+}
+.m-m {
   margin: 2rem;
 }
 

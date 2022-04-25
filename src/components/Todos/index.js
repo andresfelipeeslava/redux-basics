@@ -33,12 +33,14 @@ class Todos extends React.Component {
     };
 
     return Object.keys(todoByUser).map((userTodoId) => (
-      <div key={`${todoByUser[userTodoId].userId}_${userTodoId}`}>
+      <div className="" key={`${todoByUser[userTodoId].userId}_${userTodoId}`}>
         <input
           type="checkbox"
           defaultChecked={todoByUser[userTodoId].completed}
         />
         <span>{todoByUser[userTodoId].title}</span>
+        <button className="m-xs">editar</button>
+        <button className="m-xs">eliminar</button>
       </div>
     ));
   };
@@ -46,7 +48,7 @@ class Todos extends React.Component {
   render() {
     console.log("this.props index", this.props);
     return (
-      <div className="todos margin-2rem">
+      <div className="todos m-m">
         <Link to="/todos/save">
           <button>Guardar nuevo todo</button>
         </Link>

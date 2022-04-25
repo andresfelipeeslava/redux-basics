@@ -131,7 +131,7 @@ class Publications extends Component {
 
   render() {
     return (
-      <div className="margin-2rem">
+      <div className="m-m">
         {this.getUser()}
         {this.getPublications()}
       </div>

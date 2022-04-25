@@ -26,7 +26,7 @@ class Users extends React.Component {
 
   render() {
     return (
-      <div className="margin-2rem">
+      <div className="m-m">
         <h1>Users</h1>
         {this.showContent()}
       </div>

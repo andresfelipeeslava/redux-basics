@@ -37,7 +37,7 @@ export class SaveTodo extends React.Component {
     console.log("this.props saveTodo", this.props);
 
     return (
-      <div className="margin-2rem">
+      <div className="m-m">
         {this.props.isRedirecting ? <Redirect to="/todos" /> : ""}
         <h1>Guardar Todo</h1>
         <label htmlFor="todo_id">Usuario ID: </label>

@@ -5,6 +5,7 @@ import {
   ERROR_TODOS,
   SET_USER_ID,
   SET_TITLE,
+  TODO_ADDED,
 } from "../../types/todosTypes";
 
 const API_URL = "https://jsonplaceholder.typicode.com/todos";
@@ -62,5 +63,26 @@ export const setTitle = (title) => {
       type: SET_TITLE,
       payload: title,
     });
+  };
+};
+
+export const addTodo = (newTodo) => {
+  return async (dispatch) => {
+    dispatch({
+      type: LOADING_TODOS,
+    });
+
+    try {
+      const response = await axios.post(API_URL, newTodo);
+      dispatch({
+        type: TODO_ADDED,
+      });
+    } catch (err) {
+      console.error(err);
+      dispatch({
+        type: ERROR_TODOS,
+        payload: `Somenthing went wrong: ${err.message}`,
+      });
+    }
   };
 };

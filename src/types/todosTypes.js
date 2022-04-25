@@ -1,5 +1,6 @@
-export const GET_TODOS = "get_all_todos";
-export const LOADING_TODOS = "loading_todos";
-export const ERROR_TODOS = "error_todos";
-export const SET_USER_ID = "set_user_id";
-export const SET_TITLE = "set_title";
+export const GET_TODOS = "todos/get-all";
+export const LOADING_TODOS = "todos/isLoading";
+export const ERROR_TODOS = "/todos/error";
+export const SET_USER_ID = "todos/set-userId";
+export const SET_TITLE = "todos/set-title";
+export const TODO_ADDED = "todos/added";

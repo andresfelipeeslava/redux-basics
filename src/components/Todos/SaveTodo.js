@@ -1,15 +1,35 @@
 import React from "react";
 import { connect } from "react-redux";
 import * as todosActions from "../../actions/components/todosActions";
+import { Spinner } from "../Spinner";
+import { Fatal } from "../Fatal";
 
 export class SaveTodo extends React.Component {
-  setUserId = (event) => {
-    console.log(event.target.value);
-    this.props.setUserId(event.target.value);
+  setUserId = (event) => this.props.setUserId(event.target.value);
+  setTitle = (event) => this.props.setTitle(event.target.value);
+
+  disableButton = () => {
+    const { userId, title, isLoading } = this.props;
+    if (isLoading) return true;
+    if (!userId || !title) return true;
+
+    return false;
   };
-  setTitle = (event) => {
-    console.log(event.target.value);
-    this.props.setTitle(event.target.value);
+
+  saveTodo = () => {
+    const { userId, title, addTodo } = this.props;
+    const newTodo = {
+      userId: userId,
+      title: title,
+      completed: false,
+    };
+    addTodo(newTodo);
+  };
+
+  showAction = () => {
+    const { isLoading, error } = this.props;
+    if (isLoading) return <Spinner />;
+    if (error) return <Fatal message={error} />;
   };
 
   render() {
@@ -34,7 +54,11 @@ export class SaveTodo extends React.Component {
         />
         <br />
         <br />
-        <button>Guardar Todo</button>
+        <button onClick={this.saveTodo} disabled={this.disableButton()}>
+          Guardar Todo
+        </button>
+
+        {this.showAction()}
       </div>
     );
   }

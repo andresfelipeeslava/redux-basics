@@ -10,7 +10,7 @@ import {
 
 const INITIAL_STATE = {
   publications: [],
-  loading: false,
+  isLoading: false,
   error: "",
   commentsLoading: false,
   commentsError: "",
@@ -22,7 +22,7 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         publications: action.payload,
-        loading: false,
+        isLoading: false,
         error: "",
         commentsLoading: false,
         commentsError: "",
@@ -31,13 +31,13 @@ export default (state = INITIAL_STATE, action) => {
     case LOADING_PUBLICATIONS:
       return {
         ...state,
-        loading: true,
+        isLoading: true,
       };
 
     case ERROR_PUBLICATIONS:
       return {
         ...state,
-        loading: false,
+        isLoading: false,
         error: action.payload,
       };
 

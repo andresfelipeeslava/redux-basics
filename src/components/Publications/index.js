@@ -40,7 +40,8 @@ class Publications extends Component {
       usersReducer,
     } = this.props;
 
-    if (!usersReducer.users.length || usersReducer.loading) return <Spinner />;
+    if (!usersReducer.users.length || usersReducer.isLoading)
+      return <Spinner />;
     if (usersReducer.error) return <Fatal message={usersReducer.error} />;
 
     return this.showUserInfo(usersReducer, key);
@@ -73,7 +74,7 @@ class Publications extends Component {
 
     // Se revisa info de las publicaciones
     // info publicaciones cargando
-    if (publicationsReducer.loading) return <Spinner />;
+    if (publicationsReducer.isLoading) return <Spinner />;
     // la información de publicaciones tiene error
     if (publicationsReducer.error)
       return <Fatal message={publicationsReducer.error} />;

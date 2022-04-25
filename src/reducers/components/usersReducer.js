@@ -1,9 +1,9 @@
-import { GET_USERS, LOADING_USERS, ERROR_USERS } from '../../types/usersTypes';
+import { GET_USERS, LOADING_USERS, ERROR_USERS } from "../../types/usersTypes";
 
 const INITIAL_STATE = {
   users: [],
-  loading: false,
-  error: ''
+  isLoading: false,
+  error: "",
 };
 
 // eslint-disable-next-line import/no-anonymous-default-export
@@ -13,23 +13,24 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         users: action.payload,
-        loading: false,
-        error: ''
-      }
+        isLoading: false,
+        error: "",
+      };
 
     case LOADING_USERS:
       return {
         ...state,
-        loading: true
-      }
+        isLoading: true,
+      };
 
     case ERROR_USERS:
       return {
         ...state,
-        loading: false,
-        error: action.payload
-      }
+        isLoading: false,
+        error: action.payload,
+      };
 
-    default: return state;
-  };
+    default:
+      return state;
+  }
 };

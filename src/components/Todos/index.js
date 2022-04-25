@@ -7,15 +7,15 @@ import { Fatal } from "../Fatal";
 
 class Todos extends React.Component {
   componentDidMount() {
-    if (!this.props.todos.lenght) {
+    if (!Object.keys(this.props.todos).length) {
       this.props.getTodos();
     }
   }
 
   showContent = () => {
-    const { todos, loading, error } = this.props;
+    const { todos, isLoading, error } = this.props;
 
-    if (loading) return <Spinner />;
+    if (isLoading) return <Spinner />;
     if (error) return <Fatal message={error} />;
 
     return Object.keys(todos).map((userId) => (
@@ -44,11 +44,10 @@ class Todos extends React.Component {
   };
 
   render() {
-    // console.log("this.props>>>>>>>>>>>><", this.props);
     return (
       <div className="todos margin-2rem">
         <Link to="/todos/save">
-          <button>Guardar</button>
+          <button>Guardar nuevo todo</button>
         </Link>
         {this.showContent()}
       </div>

@@ -4,14 +4,15 @@ import {
   ERROR_TODOS,
   SET_USER_ID,
   SET_TITLE,
+  TODO_ADDED,
 } from "../../types/todosTypes";
 
 const INITIAL_STATE = {
   todos: {},
-  loading: false,
+  isLoading: false,
   error: "",
-  userId: "4",
-  title: "wrteqy",
+  userId: "",
+  title: "",
 };
 
 // eslint-disable-next-line import/no-anonymous-default-export
@@ -21,20 +22,20 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         todos: action.payload,
-        loading: false,
+        isLoading: false,
         error: "",
       };
 
     case LOADING_TODOS:
       return {
         ...state,
-        loading: true,
+        isLoading: true,
       };
 
     case ERROR_TODOS:
       return {
         ...state,
-        loading: false,
+        isLoading: false,
         error: action.payload,
       };
 
@@ -48,6 +49,14 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         title: action.payload,
+      };
+
+    case TODO_ADDED:
+      return {
+        ...state,
+        todos: {},
+        isLoading: false,
+        error: "",
       };
 
     default:

@@ -15,7 +15,7 @@ class Users extends React.Component {
 
   showContent = () => {
     // Loading state
-    if (this.props.loading) return <Spinner />;
+    if (this.props.isLoading) return <Spinner />;
 
     // Error state
     if (this.props.error) return <Fatal message={this.props.error} />;

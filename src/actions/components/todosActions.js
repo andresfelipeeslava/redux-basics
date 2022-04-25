@@ -1,10 +1,10 @@
 import axios from "axios";
 import {
+  ERROR_TODOS,
   GET_TODOS,
   LOADING_TODOS,
-  ERROR_TODOS,
-  SET_USER_ID,
   SET_TITLE,
+  SET_USER_ID,
   TODO_ADDED,
 } from "../../types/todosTypes";
 

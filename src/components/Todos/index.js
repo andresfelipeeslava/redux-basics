@@ -44,6 +44,7 @@ class Todos extends React.Component {
   };
 
   render() {
+    console.log("this.props index", this.props);
     return (
       <div className="todos margin-2rem">
         <Link to="/todos/save">

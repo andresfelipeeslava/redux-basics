@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import * as todosActions from "../../actions/components/todosActions";
 import { Spinner } from "../Spinner";
 import { Fatal } from "../Fatal";
+import { Redirect } from "react-router-dom";
 
 export class SaveTodo extends React.Component {
   setUserId = (event) => this.props.setUserId(event.target.value);
@@ -26,15 +27,18 @@ export class SaveTodo extends React.Component {
     addTodo(newTodo);
   };
 
-  showAction = () => {
+  showValidation = () => {
     const { isLoading, error } = this.props;
     if (isLoading) return <Spinner />;
     if (error) return <Fatal message={error} />;
   };
 
   render() {
+    console.log("this.props saveTodo", this.props);
+
     return (
       <div className="margin-2rem">
+        {this.props.isRedirecting ? <Redirect to="/todos" /> : ""}
         <h1>Guardar Todo</h1>
         <label htmlFor="todo_id">Usuario ID: </label>
         <input
@@ -58,7 +62,7 @@ export class SaveTodo extends React.Component {
           Guardar Todo
         </button>
 
-        {this.showAction()}
+        {this.showValidation()}
       </div>
     );
   }

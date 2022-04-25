@@ -1,19 +1,19 @@
 /* eslint-disable import/no-anonymous-default-export */
 import {
-  GET_PUBLICATIONS_BY_USER,
-  LOADING_PUBLICATIONS,
+  COMMENTS_ERROR,
+  COMMENTS_LOADING,
   ERROR_PUBLICATIONS,
   GET_COMMENTS,
-  COMMENTS_LOADING,
-  COMMENTS_ERROR,
+  GET_PUBLICATIONS_BY_USER,
+  LOADING_PUBLICATIONS,
 } from "../../types/publicationsTypes";
 
 const INITIAL_STATE = {
-  publications: [],
-  isLoading: false,
-  error: "",
-  commentsLoading: false,
+  commentsAreLoading: false,
   commentsError: "",
+  error: "",
+  isLoading: false,
+  publications: [],
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -21,11 +21,11 @@ export default (state = INITIAL_STATE, action) => {
     case GET_PUBLICATIONS_BY_USER:
       return {
         ...state,
-        publications: action.payload,
-        isLoading: false,
-        error: "",
-        commentsLoading: false,
         commentsError: "",
+        commentsAreLoading: false,
+        error: "",
+        isLoading: false,
+        publications: action.payload,
       };
 
     case LOADING_PUBLICATIONS:
@@ -44,15 +44,15 @@ export default (state = INITIAL_STATE, action) => {
     case GET_COMMENTS:
       return {
         ...state,
-        publications: action.payload,
-        commentsLoading: false,
         commentsError: "",
+        commentsAreLoading: false,
+        publications: action.payload,
       };
 
     case COMMENTS_LOADING:
       return {
         ...state,
-        commentsLoading: true,
+        commentsAreLoading: true,
       };
 
     case COMMENTS_ERROR:

@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 import * as todosActions from "../../actions/components/todosActions";
 import { Spinner } from "../Spinner";
 import { Fatal } from "../Fatal";
@@ -31,17 +32,27 @@ class Todos extends React.Component {
       ...todos[userId],
     };
 
-    return Object.keys(todoByUser).map((todoId) => (
-      <div key={`${todoByUser}_${todoId}`}>
-        <input type="checkbox" defaultChecked={todoByUser[todoId].completed} />
-        <span>{todoByUser[todoId].title}</span>
+    return Object.keys(todoByUser).map((userTodoId) => (
+      <div key={`${todoByUser[userTodoId].userId}_${userTodoId}`}>
+        <input
+          type="checkbox"
+          defaultChecked={todoByUser[userTodoId].completed}
+        />
+        <span>{todoByUser[userTodoId].title}</span>
       </div>
     ));
   };
 
   render() {
-    console.log("this.props>>>>>>>>>>>><", this.props);
-    return <div className="todos margin-2rem">{this.showContent()}</div>;
+    // console.log("this.props>>>>>>>>>>>><", this.props);
+    return (
+      <div className="todos margin-2rem">
+        <Link to="/todos/save">
+          <button>Guardar</button>
+        </Link>
+        {this.showContent()}
+      </div>
+    );
   }
 }
 

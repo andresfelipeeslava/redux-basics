@@ -4,7 +4,9 @@ import {
   LOADING_TODOS,
   SET_TITLE,
   SET_USER_ID,
-  TODO_ADDED,
+  TODO_SAVED,
+  TODOS_UPDATE,
+  TODOS_CLEANUP,
 } from "../../types/todosTypes";
 
 const INITIAL_STATE = {
@@ -53,7 +55,7 @@ export default (state = INITIAL_STATE, action) => {
         title: action.payload,
       };
 
-    case TODO_ADDED:
+    case TODO_SAVED:
       return {
         ...state,
         error: "",
@@ -62,6 +64,19 @@ export default (state = INITIAL_STATE, action) => {
         title: "",
         todos: {},
         userId: "",
+      };
+
+    case TODOS_UPDATE:
+      return {
+        ...state,
+        todos: action.payload,
+      };
+
+    case TODOS_CLEANUP:
+      return {
+        ...state,
+        userId: "",
+        title: "",
       };
 
     default:

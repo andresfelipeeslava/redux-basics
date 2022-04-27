@@ -12,6 +12,13 @@ class Todos extends React.Component {
     }
   }
 
+  componentDidUpdate() {
+    const { getTodos, loading, todos } = this.props;
+    if (!Object.keys(todos).length && !loading) {
+      getTodos();
+    }
+  }
+
   showContent = () => {
     const { todos, isLoading, error } = this.props;
 
@@ -27,26 +34,30 @@ class Todos extends React.Component {
   };
 
   setTodos = (userId) => {
-    const { todos } = this.props;
+    const { todos, markCheckbox, deleteTodo } = this.props;
     const todoByUser = {
       ...todos[userId],
     };
 
-    return Object.keys(todoByUser).map((userTodoId) => (
-      <div className="" key={`${todoByUser[userTodoId].userId}_${userTodoId}`}>
+    return Object.keys(todoByUser).map((todoId) => (
+      <div className="" key={`${todoByUser[todoId].userId}_${todoId}`}>
         <input
           type="checkbox"
-          defaultChecked={todoByUser[userTodoId].completed}
+          defaultChecked={todoByUser[todoId].completed}
+          onChange={() => markCheckbox(userId, todoId)}
         />
-        <span>{todoByUser[userTodoId].title}</span>
-        <button className="m-xs">editar</button>
-        <button className="m-xs">eliminar</button>
+        <span>{todoByUser[todoId].title}</span>
+        <Link to={`/todos/save/${userId}/${todoId}`}>
+          <button className="m-xs">Editar</button>
+        </Link>
+        <button className="m-xs" onClick={() => deleteTodo(todoId)}>
+          Eliminar
+        </button>
       </div>
     ));
   };
 
   render() {
-    console.log("this.props index", this.props);
     return (
       <div className="todos m-m">
         <Link to="/todos/save">

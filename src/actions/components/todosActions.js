@@ -5,7 +5,9 @@ import {
   LOADING_TODOS,
   SET_TITLE,
   SET_USER_ID,
-  TODO_ADDED,
+  TODOS_CLEANUP,
+  TODOS_UPDATE,
+  TODO_SAVED,
 } from "../../types/todosTypes";
 
 const API_URL = "https://jsonplaceholder.typicode.com/todos";
@@ -75,7 +77,7 @@ export const addTodo = (newTodo) => {
     try {
       const response = await axios.post(API_URL, newTodo);
       dispatch({
-        type: TODO_ADDED,
+        type: TODO_SAVED,
       });
     } catch (err) {
       console.error(err);
@@ -84,5 +86,81 @@ export const addTodo = (newTodo) => {
         payload: `Somenthing went wrong: ${err.message}`,
       });
     }
+  };
+};
+
+export const editTodo = (editedTodo) => {
+  return async (dispatch) => {
+    dispatch({
+      type: LOADING_TODOS,
+    });
+
+    try {
+      const response = await axios.put(
+        `${API_URL}/${editedTodo.id}`,
+        editedTodo
+      );
+      dispatch({
+        type: TODO_SAVED,
+      });
+    } catch (err) {
+      console.error(err);
+      dispatch({
+        type: ERROR_TODOS,
+        payload: `Somenthing went wrong: ${err.message}`,
+      });
+    }
+  };
+};
+
+export const markCheckbox = (userId, todoId) => {
+  return (dispatch, getState) => {
+    const { todos } = getState().todosReducer;
+    const selectedTodo = todos[userId][todoId];
+
+    const todosUpdated = {
+      ...todos,
+    };
+    todosUpdated[userId] = {
+      ...todos[userId],
+    };
+    todosUpdated[userId][todoId] = {
+      ...todos[userId][todoId],
+      completed: !selectedTodo.completed,
+    };
+    dispatch({
+      type: TODOS_UPDATE,
+      payload: todosUpdated,
+    });
+  };
+};
+
+export const deleteTodo = (todoId) => {
+  return async (dispatch) => {
+    dispatch({
+      type: LOADING_TODOS,
+    });
+
+    try {
+      const response = await axios.delete(`${API_URL}/${todoId}`);
+
+      dispatch({
+        type: GET_TODOS,
+        payload: {},
+      });
+    } catch (err) {
+      console.error(err.message);
+      dispatch({
+        type: ERROR_TODOS,
+        payload: `Service not available: ${err.message}`,
+      });
+    }
+  };
+};
+export const cleanUp = () => {
+  return (dispatch) => {
+    dispatch({
+      type: TODOS_CLEANUP,
+    });
   };
 };

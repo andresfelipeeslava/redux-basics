@@ -28,6 +28,9 @@ class App extends React.Component {
         <Route exact path="/todos/save">
           <SaveTodo />
         </Route>
+        <Route exact path="/todos/save/:userId/:todoId">
+          <SaveTodo />
+        </Route>
       </Router>
     );
   }

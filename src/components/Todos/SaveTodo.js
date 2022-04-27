@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import { withRouter } from "react-router";
 import * as todosActions from "../../actions/components/todosActions";
 import { Spinner } from "../Spinner";
 import { Fatal } from "../Fatal";
@@ -8,6 +9,26 @@ import { Redirect } from "react-router-dom";
 export class SaveTodo extends React.Component {
   setUserId = (event) => this.props.setUserId(event.target.value);
   setTitle = (event) => this.props.setTitle(event.target.value);
+
+  componentDidMount() {
+    const {
+      cleanUp,
+      match: {
+        params: { userId, todoId },
+      },
+      todos,
+      setTitle,
+      setUserId,
+    } = this.props;
+
+    if (userId && todoId) {
+      const todo = todos[userId][todoId];
+      setUserId(todo.userId);
+      setTitle(todo.title);
+    } else {
+      cleanUp();
+    }
+  }
 
   disableButton = () => {
     const { userId, title, isLoading } = this.props;
@@ -18,13 +39,34 @@ export class SaveTodo extends React.Component {
   };
 
   saveTodo = () => {
-    const { userId, title, addTodo } = this.props;
+    const {
+      addTodo,
+      editTodo,
+      match: {
+        params: { userId, todoId },
+      },
+      todos,
+      title,
+      userId: userID,
+    } = this.props;
+
     const newTodo = {
-      userId: userId,
-      title: title,
       completed: false,
+      title: title,
+      userId: userID,
     };
-    addTodo(newTodo);
+
+    if (userId && todoId) {
+      const todo = todos[userId][todoId];
+      const editedTodo = {
+        ...newTodo,
+        completed: todo.completed,
+        id: todo.id,
+      };
+      editTodo(editedTodo);
+    } else {
+      addTodo(newTodo);
+    }
   };
 
   showValidation = () => {
@@ -34,8 +76,6 @@ export class SaveTodo extends React.Component {
   };
 
   render() {
-    console.log("this.props saveTodo", this.props);
-
     return (
       <div className="m-m">
         {this.props.isRedirecting ? <Redirect to="/todos" /> : ""}
@@ -70,4 +110,4 @@ export class SaveTodo extends React.Component {
 
 const mapStateToProps = ({ todosReducer }) => todosReducer;
 
-export default connect(mapStateToProps, todosActions)(SaveTodo);
+export default connect(mapStateToProps, todosActions)(withRouter(SaveTodo));

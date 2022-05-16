@@ -1,9 +1,11 @@
 # Basic concepts of Redux
 
-This project is about the basics of Redux. 
+This project is about the basics of Redux.
 Implementing along with React - Router - Redux. Building a blog page
-using React and Redux, that can see the authors, their publications
-and comments on that publications.
+where you can see users that have written posts and the commets of the publications
+On the other hand, a mini todo app is integrated.
+All the state is managed by redux. So the purpose is that everything is handle by actions.
+
 
 ## Available Scripts
 
